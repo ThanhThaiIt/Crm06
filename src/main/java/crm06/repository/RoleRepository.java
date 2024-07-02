@@ -9,8 +9,61 @@ import java.util.List;
 
 import crm06.config.MysqlConfig;
 import crm06.entity.RoleEntity;
+import crm06.entity.UserEntity;
 
 public class RoleRepository {
+	
+	public RoleEntity getRoleById(int id) {
+		RoleEntity role = null;
+		    String sqlString = "SELECT * FROM roles WHERE id = ?";
+
+		    try {
+		        Connection connection = MysqlConfig.getConnection();
+		        PreparedStatement preparedStatement = connection.prepareStatement(sqlString);
+		        preparedStatement.setInt(1, id);
+
+		        // Thực hiện truy vấn và nhận kết quả trả về
+		        ResultSet resultSet = preparedStatement.executeQuery();
+		        
+		        // Nếu có kết quả, tạo đối tượng User từ dữ liệu kết quả
+		        if (resultSet.next()) {
+		            int roleId = resultSet.getInt("id");
+		            String descripttion = resultSet.getString("description");
+		            String roleName = resultSet.getString("name");
+		            
+		            role = new RoleEntity(roleId, roleName, descripttion);
+		            		
+		            
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("error: " + e.getMessage());
+		    }
+
+		    return role;
+	}
+	
+	public int deleteUserById(int id) {
+		int rowCount=0;
+		String sqlString = "Delete FROM roles r where r.id =?";
+		
+		try {
+			Connection connection = MysqlConfig.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(sqlString);
+			preparedStatement.setInt(1, id);
+			
+			
+			// excuteupdate trả về int số hàng đã thực hiện
+			rowCount =preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("error: "+e.getMessage());
+		}
+		
+		return rowCount;
+		
+	}
+	
+	
+	
 	public static List<RoleEntity> getAllRoles() {
 	    String sqlString = "SELECT * FROM roles";
 	    Connection connection = null;

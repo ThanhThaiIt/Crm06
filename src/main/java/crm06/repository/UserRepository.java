@@ -12,6 +12,65 @@ import crm06.entity.RoleEntity;
 import crm06.entity.UserEntity;
 
 public class UserRepository {
+	
+	
+	public int editUserById(UserEntity userEntity) {
+	    int rowCount = 0;
+	    String sqlString = "UPDATE users SET password = ?, first_name = ?, last_name = ?, username = ?, phone = ?, id_role = ? WHERE id = ?";
+	    
+	    try {
+	        Connection connection = MysqlConfig.getConnection();
+	        PreparedStatement preparedStatement = connection.prepareStatement(sqlString);
+	        
+	        // Set the parameters for the update query
+	        preparedStatement.setString(1, userEntity.getPasString());
+	        preparedStatement.setString(2, userEntity.getfName());
+	        preparedStatement.setString(3, userEntity.getlName());
+	        preparedStatement.setString(4, userEntity.getuName());
+	        preparedStatement.setString(5, userEntity.getPhoneString());
+	        preparedStatement.setInt(6, userEntity.getRoleEntity().getId());
+	        preparedStatement.setInt(7, userEntity.getId());
+	        
+	        // Execute update and get the number of affected rows
+	        rowCount = preparedStatement.executeUpdate();
+	    } catch (SQLException e) {
+	        System.out.println("error: " + e.getMessage());
+	    }
+	    
+	    return rowCount;
+	}
+
+	
+	public UserEntity getUserById(int id) {
+		 UserEntity user = null;
+		    String sqlString = "SELECT * FROM users WHERE id = ?";
+
+		    try {
+		        Connection connection = MysqlConfig.getConnection();
+		        PreparedStatement preparedStatement = connection.prepareStatement(sqlString);
+		        preparedStatement.setInt(1, id);
+
+		        // Thực hiện truy vấn và nhận kết quả trả về
+		        ResultSet resultSet = preparedStatement.executeQuery();
+		        
+		        // Nếu có kết quả, tạo đối tượng User từ dữ liệu kết quả
+		        if (resultSet.next()) {
+		            int userId = resultSet.getInt("id");
+		            String passWord = resultSet.getString("password");
+		            String fname = resultSet.getString("first_name");
+		            String lname = resultSet.getString("last_name");
+		            String userName = resultSet.getString("username");
+		            String phone = resultSet.getString("phone");
+		            int idRole = resultSet.getInt("id_role");
+		            
+		            user = new UserEntity(userId, passWord, fname, lname, userName, phone, idRole);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("error: " + e.getMessage());
+		    }
+
+		    return user;
+	}
 
 	public int deleteUserById(int id) {
 		int rowCount=0;

@@ -23,6 +23,20 @@ private RoleRepository roleRepository =  new RoleRepository();
 	}
 
 
+	@Override
+	public boolean deleteRole(int id) {
+		// TODO Auto-generated method stub
+		return roleRepository.deleteUserById(id)>0;
+	}
+
+
+	@Override
+	public RoleEntity getRoleByID(int id) {
+		// TODO Auto-generated method stub
+		return roleRepository.getRoleById(id);
+	}
+
+
 	
 
 }

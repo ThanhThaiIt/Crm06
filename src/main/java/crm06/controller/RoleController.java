@@ -16,7 +16,7 @@ import crm06.service.RoleServiceImp;
 import crm06.service.UserService;
 import crm06.service.UserServiceimpp;
 
-@WebServlet(name = "roleController", urlPatterns = { "/role","/add_role" })
+@WebServlet(name = "roleController", urlPatterns = { "/role","/add_role", "/edit_role" })
 public class RoleController extends HttpServlet {
 	private RoleService roleService = new RoleServiceImp();
 	private UserService userService = new UserServiceimpp();
@@ -35,6 +35,12 @@ public class RoleController extends HttpServlet {
 			System.out.println("Đường ẫn đến rl");
 			getRoleListAndMovingToRoleJSp(req, resp);
 			break;
+			
+		case "/edit_role":
+			int id = Integer.parseInt(req.getParameter("id"));
+			getRoleByIdEdit(req, resp, id);
+
+			break;
 
 		default:
 			throw new IllegalArgumentException("Unexpected Value: ");
@@ -42,16 +48,45 @@ public class RoleController extends HttpServlet {
 		}
 
 	}
+	private void getRoleByIdEdit(HttpServletRequest req, HttpServletResponse resp, int id) throws ServletException, IOException {
+		RoleEntity roleEntity = roleService.getRoleByID(id);
+		req.setAttribute("roleByID", roleEntity);
+		req.getRequestDispatcher("Role-edit.jsp").forward(req, resp);
+	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		int typeAction = Integer.parseInt(req.getParameter("typee"));
+
+		switch (typeAction) {
+		case 1:
+			actionRole1(req, resp);
+			break;
+		case 2:
+			actionRole2(req, resp);
+			break;
+
+		default:
+			break;
+		}
+		
+		
+		
+	}
+	
+	
+	private void actionRole2(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void actionRole1(HttpServletRequest req, HttpServletResponse resp) {
 		String nameRole = req.getParameter("roleName");
 		String desRole = req.getParameter("roleDes");
 		
 		RoleEntity roleEntity = new RoleEntity(nameRole, desRole);
 		roleService.addRole(roleEntity);
+		
 	}
-	
-	
 	public void movingToAddRoleJsp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("role-add.jsp").forward(req, resp);
 	}

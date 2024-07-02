@@ -15,7 +15,7 @@ import crm06.entity.UserEntity;
 import crm06.service.UserService;
 import crm06.service.UserServiceimpp;
 
-@WebServlet(name = "userController", urlPatterns = { "/add_user", "/user" })
+@WebServlet(name = "userController", urlPatterns = { "/add_user", "/user", "/edit_user" })
 public class AddUserController extends HttpServlet {
 	private UserService userService = new UserServiceimpp();
 
@@ -31,6 +31,11 @@ public class AddUserController extends HttpServlet {
 		case "/user":
 			getUserListAndMovingToUserJSp(req, resp);
 			break;
+		case "/edit_user":
+			int id = Integer.parseInt(req.getParameter("id"));
+			getUserByIdEdit(req, resp, id);
+
+			break;
 
 		default:
 			throw new IllegalArgumentException("Unexpected Value: ");
@@ -41,6 +46,47 @@ public class AddUserController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		int typeAction = Integer.parseInt(req.getParameter("typee"));
+
+		switch (typeAction) {
+		case 1:
+			action1(req, resp);
+			break;
+		case 2:
+			action2(req, resp);
+			break;
+
+		default:
+			break;
+		}
+
+//		if (typeAction==1) {
+//			action1(req, resp);
+//		}else {
+//			System.out.println("Khong thanh cong roi");
+//		}
+
+	}
+
+	private void action2(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int id = Integer.parseInt(req.getParameter("idU"));
+		String fName = req.getParameter("fname");
+		String lName = req.getParameter("lname");
+		String uName = req.getParameter("uname");
+		String password = req.getParameter("password");
+		String phone = req.getParameter("phone");
+		String roleS = req.getParameter("role");
+		int roleint = Integer.parseInt(roleS);
+
+		UserEntity userEntity = new UserEntity(id,password, fName, lName, uName, phone, roleint);
+		
+		userService.editUser(userEntity);
+
+		getUserListAndMovingToUserJSp(req, resp);
+	}
+
+	private void action1(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String fName = req.getParameter("fname");
 		String lName = req.getParameter("lname");
 		String uName = req.getParameter("uname");
@@ -56,13 +102,21 @@ public class AddUserController extends HttpServlet {
 		// GetUserList
 		getUserListAndMovingToUserJSp(req, resp);
 	}
-	
-	
-	private void getUserListAndMovingToUserJSp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
+
+	private void getUserListAndMovingToUserJSp(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
 		req.setAttribute("usersList", userService.getAllUserEntity());
 		req.getRequestDispatcher("user-table.jsp").forward(req, resp);
+	}
+
+	private void getUserByIdEdit(HttpServletRequest req, HttpServletResponse resp, int id)
+			throws ServletException, IOException {
+		UserEntity userEntity = userService.getUserById(id);
+		req.setAttribute("userByID", userEntity);
+		List<RoleEntity> list = userService.getAllRole();
+		req.setAttribute("ListRole", list);
+		req.getRequestDispatcher("profile-edit.jsp").forward(req, resp);
 	}
 
 	private void moveUserAdd(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -70,6 +124,7 @@ public class AddUserController extends HttpServlet {
 		req.setAttribute("ListRole", list);
 		req.getRequestDispatcher("user-add.jsp").forward(req, resp);
 	}
+
 }
 
 // TODO Auto-generated method stub

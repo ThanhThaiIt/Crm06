@@ -21,6 +21,7 @@ public class UserEntity {
 	}
 	
 	
+	
 	public UserEntity(String pasString, String fName, String lName, String uName, String phoneString) {
 		super();
 		this.pasString = pasString;
@@ -34,6 +35,18 @@ public class UserEntity {
 
 	public UserEntity(String pasString, String fName, String lName, String uName, String phoneString, int roleEntity) {
 		super();
+		this.pasString = pasString;
+		this.fName = fName;
+		this.lName = lName;
+		this.uName = uName;
+		this.phoneString = phoneString;
+		this.roleEntity = new RoleEntity();
+		this.roleEntity.setId(roleEntity); 
+	}
+	
+	public UserEntity(int id,String pasString, String fName, String lName, String uName, String phoneString, int roleEntity) {
+		super();
+		this.id = id;
 		this.pasString = pasString;
 		this.fName = fName;
 		this.lName = lName;

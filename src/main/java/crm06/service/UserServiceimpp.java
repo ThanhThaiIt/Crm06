@@ -7,9 +7,9 @@ import crm06.entity.UserEntity;
 import crm06.repository.RoleRepository;
 import crm06.repository.UserRepository;
 
-public class UserServiceimpp implements UserService{
+public class UserServiceimpp implements UserService {
 	private RoleRepository roleRepository = new RoleRepository();
-	private UserRepository userRepository = new  UserRepository();
+	private UserRepository userRepository = new UserRepository();
 
 	@Override
 	public List<RoleEntity> getAllRole() {
@@ -20,7 +20,7 @@ public class UserServiceimpp implements UserService{
 	@Override
 	public void addUser(UserEntity userEntity) {
 		userRepository.addUser(userEntity);
-		
+
 	}
 
 	@Override
@@ -33,10 +33,19 @@ public class UserServiceimpp implements UserService{
 	public boolean deleteUser(int id) {
 		// TODO Auto-generated method stub
 		System.out.println(id);
-		return userRepository.deleteUserById(id)>0;
+		return userRepository.deleteUserById(id) > 0;
 	}
-	
-	
-	
+
+	@Override
+	public UserEntity getUserById(int id) {
+		// TODO Auto-generated method stub
+		return userRepository.getUserById(id);
+	}
+
+	@Override
+	public void editUser(UserEntity userEntity) {
+		userRepository.editUserById(userEntity);
+
+	}
 
 }

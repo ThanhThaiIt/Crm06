@@ -11,4 +11,6 @@ public interface UserService {
 	
 	public void addUser(UserEntity userEntity);
 	boolean deleteUser(int id);
+	public UserEntity getUserById(int id) ;
+	public void editUser(UserEntity userEntity);
 }
