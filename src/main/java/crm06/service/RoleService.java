@@ -13,4 +13,6 @@ public interface RoleService {
 	public boolean deleteRole(int id);
 	
 	public RoleEntity getRoleByID(int id);
+	
+	public void editRole(RoleEntity roleEntity) ;
 }

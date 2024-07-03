@@ -13,6 +13,29 @@ import crm06.entity.UserEntity;
 
 public class RoleRepository {
 	
+	public int editRoleById(RoleEntity roleEntity) {
+	    int rowCount = 0;
+	    String sqlString = "UPDATE roles SET description = ?, name = ? WHERE id = ?";
+	    
+	    try {
+	        Connection connection = MysqlConfig.getConnection();
+	        PreparedStatement preparedStatement = connection.prepareStatement(sqlString);
+	        
+	        // Set the parameters for the update query
+	        
+	        preparedStatement.setString(1, roleEntity.getDescripString());
+	        preparedStatement.setString(2, roleEntity.getNameString());
+	        preparedStatement.setInt(3, roleEntity.getId());
+	        
+	        // Execute update and get the number of affected rows
+	        rowCount = preparedStatement.executeUpdate();
+	    } catch (SQLException e) {
+	        System.out.println("error: " + e.getMessage());
+	    }
+	    
+	    return rowCount;
+	}
+	
 	public RoleEntity getRoleById(int id) {
 		RoleEntity role = null;
 		    String sqlString = "SELECT * FROM roles WHERE id = ?";

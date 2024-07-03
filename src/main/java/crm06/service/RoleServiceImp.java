@@ -37,6 +37,13 @@ private RoleRepository roleRepository =  new RoleRepository();
 	}
 
 
+	@Override
+	public void editRole(RoleEntity roleEntity) {
+		roleRepository.editRoleById(roleEntity);
+		
+	}
+
+
 	
 
 }

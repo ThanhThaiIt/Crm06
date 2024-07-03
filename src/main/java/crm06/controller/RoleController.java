@@ -75,18 +75,28 @@ public class RoleController extends HttpServlet {
 	}
 	
 	
-	private void actionRole2(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
-		
+	private void actionRole2(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int idRole = Integer.parseInt(req.getParameter("rId"));
+		String nameRole = req.getParameter("rName");
+		String desRole = req.getParameter("rDes");
+		RoleEntity roleEntity = new RoleEntity(idRole, nameRole, desRole);
+		roleService.editRole(roleEntity);
+		getRoleListAndMovingToRoleJSp(req, resp);
 	}
-	private void actionRole1(HttpServletRequest req, HttpServletResponse resp) {
+	private void actionRole1(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String nameRole = req.getParameter("roleName");
 		String desRole = req.getParameter("roleDes");
 		
 		RoleEntity roleEntity = new RoleEntity(nameRole, desRole);
 		roleService.addRole(roleEntity);
-		
+		getRoleListAndMovingToRoleJSp(req, resp);
 	}
+	
+//	public void forwardRoleTable(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		List<RoleEntity> list = userService.getAllRole();
+//		req.setAttribute("ListRole", list);
+//		req.getRequestDispatcher("role-table.jsp").forward(req, resp);
+//	}
 	public void movingToAddRoleJsp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("role-add.jsp").forward(req, resp);
 	}
