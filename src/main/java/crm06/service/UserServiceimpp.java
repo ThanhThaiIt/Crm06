@@ -48,4 +48,10 @@ public class UserServiceimpp implements UserService {
 
 	}
 
+	@Override
+	public List<UserEntity> swapUser(int id, List<UserEntity> listUsers) {
+		return userRepository.swapUserToFirst(id, listUsers);
+		
+	}
+
 }

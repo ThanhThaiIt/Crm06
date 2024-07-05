@@ -13,4 +13,5 @@ public interface UserService {
 	boolean deleteUser(int id);
 	public UserEntity getUserById(int id) ;
 	public void editUser(UserEntity userEntity);
+	public List<UserEntity> swapUser(int id, List<UserEntity> listUsers) ;
 }

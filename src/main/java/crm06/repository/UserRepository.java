@@ -13,6 +13,27 @@ import crm06.entity.UserEntity;
 
 public class UserRepository {
 	
+	public  List<UserEntity> swapUserToFirst(int id, List<UserEntity> listUsers) {
+        // Find the index of the user with the given id
+        int index = -1;
+        for (int i = 0; i < listUsers.size(); i++) {
+            if (listUsers.get(i).getId() == id) {
+                index = i;
+                break;
+            }
+        }
+
+        // If user with the given id is found, swap with the first element
+        if (index != -1) {
+            UserEntity user = listUsers.get(index);
+            listUsers.remove(index);
+            listUsers.add(0, user);
+        }
+
+        // Return the modified list
+        return listUsers;
+    }
+	
 	
 	public int editUserById(UserEntity userEntity) {
 	    int rowCount = 0;
