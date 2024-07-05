@@ -3,13 +3,18 @@ package crm06.service;
 import java.util.List;
 
 import crm06.entity.RoleEntity;
+import crm06.entity.StatisticalTaskEntity;
+import crm06.entity.TaskEntity;
+import crm06.entity.TaskEntityLists;
 import crm06.entity.UserEntity;
 import crm06.repository.RoleRepository;
+import crm06.repository.TaskRepository;
 import crm06.repository.UserRepository;
 
 public class UserServiceimpp implements UserService {
 	private RoleRepository roleRepository = new RoleRepository();
 	private UserRepository userRepository = new UserRepository();
+	private TaskRepository taskRepository = new TaskRepository();
 
 	@Override
 	public List<RoleEntity> getAllRole() {
@@ -52,6 +57,23 @@ public class UserServiceimpp implements UserService {
 	public List<UserEntity> swapUser(int id, List<UserEntity> listUsers) {
 		return userRepository.swapUserToFirst(id, listUsers);
 		
+	}
+
+	@Override
+	public List<TaskEntity> getListTaskByidUser(int id) {
+		// TODO Auto-generated method stub
+		return taskRepository.getListTaskByIdUserForDetail(id);
+	}
+
+	@Override
+	public StatisticalTaskEntity getStatisticalTaskEntity(List<TaskEntity> listTask) {
+		return taskRepository.getStatisticalTaskEntity(listTask);
+	}
+
+	@Override
+	public TaskEntityLists getTasksByStatus(List<TaskEntity> taskList) {
+		
+		return taskRepository.getTasksByStatus(taskList);
 	}
 
 }

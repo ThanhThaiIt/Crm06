@@ -12,14 +12,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(filterName = "authenFilter", urlPatterns = { "/user", "/login" ,"/add_user","/edit_user"})
-public class AuthenticationFilter implements Filter {
+@WebFilter(filterName = "TaskFilter", urlPatterns = { "/add_task", "/task", "/edit_task", "/login" })
+public class TaskFilter implements Filter{
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-
+		
+		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		boolean isExist = false;
@@ -51,7 +51,7 @@ public class AuthenticationFilter implements Filter {
 		String path = req.getServletPath();
 		boolean shouldContinue = true;
 		switch (path) {
-		case "/user":
+		case "/task":
 			if (isExist) {
 				chain.doFilter(req, resp);
 			}else {
@@ -65,14 +65,14 @@ public class AuthenticationFilter implements Filter {
 		case "/login":
 			if (isExist) {
 				
-				resp.sendRedirect(conetxt+"/user");
+				resp.sendRedirect(conetxt+"/task");
 				shouldContinue = false;
 			}else {
 				chain.doFilter(req, resp);
 			}
 			break;
 			
-		case "/add_user":
+		case "/add_task":
 			if (isExist) {
 				chain.doFilter(req, resp);
 			}else {
@@ -82,7 +82,7 @@ public class AuthenticationFilter implements Filter {
 			}
 
 			break;
-		case "/edit_user":
+		case "/edit_task":
 			if (isExist) {
 				chain.doFilter(req, resp);
 			}else {
@@ -102,6 +102,8 @@ public class AuthenticationFilter implements Filter {
 		// CHo phep di tiep
 
 		//chain.doFilter(request, response);
+	
+		
 	}
 
 }

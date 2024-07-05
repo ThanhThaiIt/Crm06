@@ -11,15 +11,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-@WebFilter(filterName = "authenFilter", urlPatterns = { "/user", "/login" ,"/add_user","/edit_user"})
-public class AuthenticationFilter implements Filter {
+@WebFilter(filterName = "ProjectFilter", urlPatterns = { "/add_project", "/project", "/edit_project", "/login" })
+public class ProjectFilter implements Filter{
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-
+		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		boolean isExist = false;
@@ -51,7 +49,7 @@ public class AuthenticationFilter implements Filter {
 		String path = req.getServletPath();
 		boolean shouldContinue = true;
 		switch (path) {
-		case "/user":
+		case "/project":
 			if (isExist) {
 				chain.doFilter(req, resp);
 			}else {
@@ -65,14 +63,14 @@ public class AuthenticationFilter implements Filter {
 		case "/login":
 			if (isExist) {
 				
-				resp.sendRedirect(conetxt+"/user");
+				resp.sendRedirect(conetxt+"/project");
 				shouldContinue = false;
 			}else {
 				chain.doFilter(req, resp);
 			}
 			break;
 			
-		case "/add_user":
+		case "/add_project":
 			if (isExist) {
 				chain.doFilter(req, resp);
 			}else {
@@ -82,7 +80,7 @@ public class AuthenticationFilter implements Filter {
 			}
 
 			break;
-		case "/edit_user":
+		case "/edit_project":
 			if (isExist) {
 				chain.doFilter(req, resp);
 			}else {
@@ -98,10 +96,6 @@ public class AuthenticationFilter implements Filter {
 			System.out.println("khong tim thay link");
 			// break;
 		}
-
-		// CHo phep di tiep
-
-		//chain.doFilter(request, response);
 	}
 
 }

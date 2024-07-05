@@ -119,7 +119,7 @@ private void action2(HttpServletRequest req, HttpServletResponse resp) throws Se
     SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     try {
-        // Validate start date and end date before parsing
+        // Validate "start date" va "end date" truoc khi parse
         if (pStartDate.isEmpty() || pEndDate.isEmpty()) {
             throw new IllegalArgumentException("Start date and end date cannot be empty.");
         }

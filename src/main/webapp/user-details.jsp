@@ -59,8 +59,8 @@
                                     <div class="user-content">
                                         <a href="javascript:void(0)"><img src="plugins/images/users/genu.jpg"
                                                 class="thumb-lg img-circle" alt="img"></a>
-                                        <h4 class="text-white">Nguyễn Văn Tèo</h4>
-                                        <h5 class="text-white">info.teo@gmail.com</h5>
+                                        <h4 class="text-white">${fullName}</h4>
+                                        <h5 class="text-white">${userByID.uName}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
 			<div class="white-box">
 				<div class="col-in row">
 					<div class="col-xs-12">
-						<h3 class="counter text-right m-t-15 text-danger">20%</h3>
+						<h3 class="counter text-right m-t-15 text-danger">${Statis.chuaThucHienPercent}%</h3>
                     </div>
                     <div class="col-xs-12">
 						<i data-icon="E" class="linea-icon linea-basic"></i>
@@ -97,7 +97,7 @@
 			<div class="white-box">
 				<div class="col-in row">
 					<div class="col-xs-12">
-						<h3 class="counter text-right m-t-15 text-megna">50%</h3>
+						<h3 class="counter text-right m-t-15 text-megna">${Statis.dangThucHienPercent}%</h3>
                     </div>
                     <div class="col-xs-12">
 						<i class="linea-icon linea-basic" data-icon="&#xe01b;"></i>
@@ -119,7 +119,7 @@
 			<div class="white-box">
 				<div class="col-in row">
 					<div class="col-xs-12">
-						<h3 class="counter text-right m-t-15 text-primary">30%</h3>
+						<h3 class="counter text-right m-t-15 text-primary">${Statis.daThucHienPercent}%</h3>
                     </div>
                     <div class="col-xs-12">
 						<i class="linea-icon linea-basic" data-icon="&#xe00b;"></i>
@@ -149,22 +149,19 @@
                         <div class="white-box">
                             <h3 class="box-title">Chưa thực hiện</h3>
                             <div class="message-center">
+                            
+                            
+                            
+                            <c:forEach var="item" items="${ListTaskStatus.chuaThucHienTasks}">
                                 <a href="#">
                                     <div class="mail-contnet">
-                                        <h5>Phân tích hệ thống</h5>
+                                        <h5>${item.name}</h5>
                                         <span class="mail-desc"></span>
-                                        <span class="time">Bắt đầu: 05/07/2020</span>
-                                        <span class="time">Kết thúc: 17/07/2020</span>
+                                        <span class="time">Bắt đầu: ${item.start_date}</span>
+                                        <span class="time">Kết thúc: ${item.end_date}</span>
                                     </div>
                                 </a> 
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Thiết kế database</h5>
-                                        <span class="mail-desc"></span>
-                                        <span class="time">Bắt đầu: 05/07/2020</span>
-                                        <span class="time">Kết thúc: 17/07/2020</span>
-                                    </div>
-                                </a>
+                                </c:forEach>
                             </div>
                         </div>
                     </div>
@@ -172,22 +169,21 @@
                         <div class="white-box">
                             <h3 class="box-title">Đang thực hiện</h3>
                             <div class="message-center">
+                            
+                            <c:forEach var="item" items="${ListTaskStatus.dangThucHienTasks}">
                                 <a href="#">
                                     <div class="mail-contnet">
-                                        <h5>Phân tích hệ thống</h5>
+                                        <h5>${item.name}</h5>
                                         <span class="mail-desc"></span>
-                                        <span class="time">Bắt đầu: 05/07/2020</span>
-                                        <span class="time">Kết thúc: 17/07/2020</span>
+                                        <span class="time">Bắt đầu: ${item.start_date}</span>
+                                        <span class="time">Kết thúc: ${item.end_date}</span>
                                     </div>
                                 </a> 
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Thiết kế database</h5>
-                                        <span class="mail-desc"></span>
-                                        <span class="time">Bắt đầu: 05/07/2020</span>
-                                        <span class="time">Kết thúc: 17/07/2020</span>
-                                    </div>
-                                </a>
+                                
+                                 </c:forEach>
+                                
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -195,22 +191,24 @@
                         <div class="white-box">
                             <h3 class="box-title">Đã hoàn thành</h3>
                             <div class="message-center">
+                            
+                            
+                            <c:forEach var="item" items="${ListTaskStatus.daThucHienTasks}">
                                 <a href="#">
                                     <div class="mail-contnet">
-                                        <h5>Phân tích hệ thống</h5>
+                                       <h5>${item.name}</h5>
                                         <span class="mail-desc"></span>
-                                        <span class="time">Bắt đầu: 05/07/2020</span>
-                                        <span class="time">Kết thúc: 17/07/2020</span>
+                                        <span class="time">Bắt đầu: ${item.start_date}</span>
+                                        <span class="time">Kết thúc: ${item.end_date}</span>
                                     </div>
                                 </a> 
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Thiết kế database</h5>
-                                        <span class="mail-desc"></span>
-                                        <span class="time">Bắt đầu: 05/07/2020</span>
-                                        <span class="time">Kết thúc: 17/07/2020</span>
-                                    </div>
-                                </a>
+                                
+                                 </c:forEach>
+                                
+                              
+                                
+                                
+                                
                             </div>
                         </div>
                     </div>

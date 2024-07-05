@@ -63,13 +63,14 @@
                                 <table class="table" id="example">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
+                                            <th>ID Task</th>
+                                            <th>Tên Nhân Viên</th>
+                                            <th>Tên Dự Án</th>
+                                            <th>Tình Trạng</th>
                                             <th>Tên Công Việc</th>
-                                            <th>Dự Án</th>
-                                            <th>Người Thực Hiện</th>
                                             <th>Ngày Bắt Đầu</th>
                                             <th>Ngày Kết Thúc</th>
-                                            <th>Trạng Thái</th>
+                                            
                                             <th>Hành Động</th>
                                         </tr>
                                     </thead>
