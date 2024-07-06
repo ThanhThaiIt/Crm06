@@ -77,7 +77,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <h5 class="text-muted vb">CHƯA BẮT ĐẦU</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-danger">20%</h3>
+                                    <h3 class="counter text-right m-t-15 text-danger">${projectPercent.chuaThucHienPercent}%</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
@@ -99,7 +99,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <h5 class="text-muted vb">ĐANG THỰC HIỆN</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-megna">50%</h3>
+                                    <h3 class="counter text-right m-t-15 text-megna">${projectPercent.dangThucHienPercent}%</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
@@ -121,7 +121,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <h5 class="text-muted vb">HOÀN THÀNH</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-primary">30%</h3>
+                                    <h3 class="counter text-right m-t-15 text-primary">${projectPercent.daThucHienPercent}%</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
@@ -137,8 +137,70 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
                 <!-- END THỐNG KÊ -->
 
-                <!-- BEGIN DANH SÁCH CÔNG VIỆC -->
+                <!-- BEGIN DANH SÁCH CÔNG VIỆC projectDetail -->
                 <div class="row">
+                    <div class="col-xs-12">
+                        <a href="#" class="group-title">
+                            <img width="30" src="plugins/images/users/pawandeep.jpg" class="img-circle" />
+                            <span>Pavan kumar</span>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="white-box">
+                            <h3 class="box-title">Chưa thực hiện</h3>
+                            <div class="message-center"> 
+                            <c:forEach var="item"
+									items="${projectDetail.chuaThucHienTasks}">
+                                <a href="#">
+                                    <div class="mail-contnet">
+                                        <h5>${item.name}</h5> <span class="mail-desc">${item.userEntity.lName}</span> <span
+                                            class="time">${item.start_date} AM</span>
+                                    </div>
+                                </a>
+                                
+                                </c:forEach>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="white-box">
+                            <h3 class="box-title">Đang thực hiện</h3>
+                            <div class="message-center">
+                            
+                            <c:forEach var="item"
+									items="${projectDetail.dangThucHienTasks}">
+                                <a href="#">
+                                    <div class="mail-contnet">
+                                        <h5>${item.name}</h5> <span class="mail-desc">${item.userEntity.lName}</span> <span
+                                            class="time">${item.start_date} AM</span>
+                                    </div>
+                                </a>
+                                
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="white-box">
+                            <h3 class="box-title">Đã hoàn thành</h3>
+                            <div class="message-center">
+                            <c:forEach var="item"
+									items="${projectDetail.daThucHienTasks}">
+                                <a href="#">
+                                    <div class="mail-contnet">
+                                        <h5>${item.name}</h5> <span class="mail-desc">${item.userEntity.lName}</span> <span
+                                            class="time">${item.start_date} AM</span>
+                                    </div>
+                                </a>
+                                
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--                 <div class="row">
                     <div class="col-xs-12">
                         <a href="#" class="group-title">
                             <img width="30" src="plugins/images/users/pawandeep.jpg" class="img-circle" />
@@ -202,72 +264,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <a href="#" class="group-title">
-                            <img width="30" src="plugins/images/users/pawandeep.jpg" class="img-circle" />
-                            <span>Pavan kumar</span>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Chưa thực hiện</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Đang thực hiện</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Đã hoàn thành</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div> -->
+
                 <!-- END DANH SÁCH CÔNG VIỆC -->
             </div>
             <!-- /.container-fluid -->

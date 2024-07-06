@@ -12,7 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(filterName = "authenFilter", urlPatterns = { "/user", "/login" ,"/add_user","/edit_user"})
+@WebFilter(filterName = "authenFilter", urlPatterns = { "/user", "/login" ,"/add_user","/edit_user","/detail_user"})
 public class AuthenticationFilter implements Filter {
 
 	@Override
@@ -83,6 +83,16 @@ public class AuthenticationFilter implements Filter {
 
 			break;
 		case "/edit_user":
+			if (isExist) {
+				chain.doFilter(req, resp);
+			}else {
+				System.out.println("hello LoginPage");
+				resp.sendRedirect(conetxt+"/login");
+				shouldContinue = false;
+			}
+
+			break;
+		case "/detail_user":
 			if (isExist) {
 				chain.doFilter(req, resp);
 			}else {

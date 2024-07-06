@@ -155,6 +155,115 @@ public class TaskRepository {
 //
 //		    return lTaskEntities;
 //	}
+	
+	
+	public  StatisticalTaskEntity demSoLuongTaskTask(List<TaskEntity> taskList) {
+		int chuaThucHien = 0;
+		int dangThucHien = 0;
+		int daThucHien = 0;
+		for (TaskEntity task : taskList) {
+			int status = task.getStatusEntity().getId();
+			switch (status) {
+			case 1:
+				chuaThucHien++;
+				break;
+			case 2:
+				dangThucHien++;
+				break;
+			case 3:
+				daThucHien++;
+				break;
+			}
+		}
+		return new StatisticalTaskEntity(chuaThucHien, dangThucHien, daThucHien);
+	}
+
+	
+	
+	
+	
+	public List<TaskEntity> getAllListTask() {
+	    List<TaskEntity> lTaskEntities = new ArrayList<>();
+	    String sqlString = "SELECT\n" +
+	            "    t.id,\n" +
+	            "    t.id_user as idu,\n" +
+	            "    t.id_project as idp,\n" +
+	            "    t.id_status as ids,\n" +
+	            "    t.name,\n" +
+	            "    t.start_date,\n" +
+	            "    t.end_date,\n" +
+	            "    u.last_name as lastNameU,\n" +
+	            "    s.name as stsName,\n" +
+	            "    p.name as proName\n" +
+	            "FROM\n" +
+	            "    task t\n" +
+	            "JOIN users u ON\n" +
+	            "    t.id_user = u.id\n" +
+	            "JOIN status s ON\n" +
+	            "    t.id_status = s.id\n" +
+	            "JOIN project p ON\n" +
+	            "    t.id_project = p.id ";
+
+	    try (Connection connection = MysqlConfig.getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement(sqlString)) {
+	        // Thực hiện truy vấn và nhận kết quả trả về
+	        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+	            // Duyệt qua tất cả các kết quả
+	            while (resultSet.next()) {
+	                TaskEntity taskEntity = new TaskEntity(
+	                        resultSet.getInt("idu"),
+	                        resultSet.getInt("idp"),
+	                        resultSet.getInt("ids"),
+	                        resultSet.getString("name"),
+	                        resultSet.getTimestamp("start_date"),
+	                        resultSet.getTimestamp("end_date"),
+	                        resultSet.getString("lastNameU")
+	                );
+	                lTaskEntities.add(taskEntity);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error: " + e.getMessage());
+	    }
+
+	    return lTaskEntities;
+	}
+
+	
+	
+	
+	
+	
+	public List<TaskEntity> getListTaskByIdProjectForDetail(int id) {
+		List<TaskEntity> lTaskEntities = new ArrayList<>();
+		String sqlString = "SELECT\n" + "    t.id,\n" + "    t.id_user as idu,\n" + "    t.id_project as idp,\n"
+				+ "    t.id_status as ids,\n" + "    t.name,\n" + "    t.start_date,\n" + "    t.end_date,\n"
+				+ "    u.last_name as lastNameU,\n" + "    s.name as stsName,\n" + "    p.name as proName\n" + "FROM\n"
+				+ "    task t\n" + "JOIN users u ON\n" + "    t.id_user = u.id\n" + "JOIN status s ON\n"
+				+ "    t.id_status = s.id\n" + "JOIN project p ON\n" + "    t.id_project = p.id WHERE p.id = ?";
+
+		try (Connection connection = MysqlConfig.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sqlString)) {
+			preparedStatement.setInt(1, id);
+
+			// Thực hiện truy vấn và nhận kết quả trả về
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				// Duyệt qua tất cả các kết quả
+				while (resultSet.next()) {
+					TaskEntity taskEntity = new TaskEntity( resultSet.getInt("idu"),
+							resultSet.getInt("idp"), resultSet.getInt("ids"), resultSet.getString("name"),
+							resultSet.getTimestamp("start_date"), resultSet.getTimestamp("end_date"),resultSet.getString("lastNameU"));
+					lTaskEntities.add(taskEntity);
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		return lTaskEntities;
+	}
+	
+	
 	public List<TaskEntity> getListTaskByIdUserForDetail(int id) {
 		List<TaskEntity> lTaskEntities = new ArrayList<>();
 		String sqlString = "SELECT\n" + "    t.id,\n" + "    t.id_user as idu,\n" + "    t.id_project as idp,\n"

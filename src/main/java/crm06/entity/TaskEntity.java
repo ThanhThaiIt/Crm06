@@ -29,6 +29,9 @@ public class TaskEntity {
 		this.end_date = end_date;
 	}
 	
+	
+	
+	
 	public TaskEntity(int id, String userName, String projectName, String statusName, String name, Timestamp start_date,
 			Timestamp end_date) {
 		super();
@@ -42,6 +45,24 @@ public class TaskEntity {
 		this.projectEntity.setName(projectName);
 		this.statusEntity = new StatusEntity();
 		this.statusEntity.setName(statusName);
+		this.name = name;
+		this.start_date = start_date;
+		this.end_date = end_date;
+	}
+	
+	public TaskEntity(int userID, int projectID, int statusID, String name, Timestamp start_date, Timestamp end_date,String lnameStrUser) {
+		super();
+
+//		this.userEntity = userEntity;
+//		this.projectEntity = projectEntity;
+//		this.statusEntity = statusEntity;
+		this.userEntity = new UserEntity();
+		this.userEntity.setId(userID);
+		this.userEntity.setlName(lnameStrUser);
+		this.projectEntity = new ProjectEntity();
+		this.projectEntity.setId(projectID);
+		this.statusEntity = new StatusEntity();
+		this.statusEntity.setId(statusID);
 		this.name = name;
 		this.start_date = start_date;
 		this.end_date = end_date;

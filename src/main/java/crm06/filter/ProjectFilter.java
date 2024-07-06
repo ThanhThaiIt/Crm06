@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-@WebFilter(filterName = "ProjectFilter", urlPatterns = { "/add_project", "/project", "/edit_project", "/login" })
+@WebFilter(filterName = "ProjectFilter", urlPatterns = { "/add_project", "/project", "/edit_project", "/login","/detail_project" })
 public class ProjectFilter implements Filter{
 
 	@Override
@@ -78,9 +78,19 @@ public class ProjectFilter implements Filter{
 				resp.sendRedirect(conetxt+"/login");
 				shouldContinue = false;
 			}
-
+//detail_project
 			break;
 		case "/edit_project":
+			if (isExist) {
+				chain.doFilter(req, resp);
+			}else {
+				System.out.println("hello LoginPage");
+				resp.sendRedirect(conetxt+"/login");
+				shouldContinue = false;
+			}
+
+			break;
+		case "/detail_project":
 			if (isExist) {
 				chain.doFilter(req, resp);
 			}else {

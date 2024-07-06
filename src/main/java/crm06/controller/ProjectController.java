@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import crm06.entity.ProjectEntity;
+import crm06.entity.StatisticalTaskEntity;
+import crm06.entity.TaskEntity;
+import crm06.entity.TaskEntityLists;
 import crm06.service.ProjectService;
 import crm06.service.ProjectServiceImp;
-@WebServlet(name = "projectController", urlPatterns = { "/add_project", "/project", "/edit_project" })
+@WebServlet(name = "projectController", urlPatterns = { "/add_project", "/project", "/edit_project","/detail_project" })
 public class ProjectController extends HttpServlet{
 	
 	ProjectService projectService = new ProjectServiceImp();
@@ -36,11 +40,26 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		getProjectByIdEdit(req, resp, id);
 
 		break;
+		
+	case "/detail_project":
+		int idU = Integer.parseInt(req.getParameter("idP"));
+		getProjectByIdDetail(req, resp, idU);
+
+		break;
 
 	default:
 		throw new IllegalArgumentException("Unexpected Value: ");
 
 	}
+}
+
+private void getProjectByIdDetail(HttpServletRequest req, HttpServletResponse resp, int idP) throws ServletException, IOException {
+	List<TaskEntity> taskEntities = projectService.getListTaskByIdProject(idP);
+	StatisticalTaskEntity taskEntitypercent = projectService.getStatisticalTaskEntity(taskEntities);
+	TaskEntityLists taskEntityLists = projectService.getTasksByStatus(taskEntities);
+	req.setAttribute("projectDetail", taskEntityLists);
+	req.setAttribute("projectPercent", taskEntitypercent);
+	req.getRequestDispatcher("groupwork-details.jsp").forward(req, resp);
 }
 
 @Override
@@ -63,7 +82,8 @@ default:
 
 private void getProjectByIdEdit(HttpServletRequest req, HttpServletResponse resp, int id) throws ServletException, IOException {
 	
-	req.setAttribute("projectByID", projectService.getProjectByiD(id));
+	req.setAttribute("projectByID", projectService.demSoLuongTaskTask(projectService.getAllListTask()));
+	
 	req.getRequestDispatcher("groupWorkEdit.jsp").forward(req, resp);
 }
 

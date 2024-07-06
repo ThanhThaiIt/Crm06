@@ -80,7 +80,7 @@
                                             <td>
                                                 <a href="edit_project?id=${item.id}" class="btn btn-sm btn-primary">Sửa</a>
                                                 <a href="#" id-project="${item.id}" class="btn-xoa btn btn-sm btn-danger">Xóa</a>
-                                                <a href="groupwork-details.html" class="btn btn-sm btn-info">Xem</a>
+                                                <a href="detail_project?idP=${item.id}" class="btn btn-sm btn-info">Xem</a>
                                             </td>
                                         </tr>
                                         </c:forEach>
