@@ -19,6 +19,60 @@ import crm06.entity.UserEntity;
 
 public class TaskRepository {
 	
+	
+	
+	
+	public  int countRows() {
+	    int count = 0;
+	    String sql = "SELECT COUNT(*) FROM task ";
+	    
+	    try (Connection connection = MysqlConfig.getConnection();
+	         PreparedStatement ptmt = connection.prepareStatement(sql);
+	         ResultSet rs = ptmt.executeQuery()) {
+	         
+	        if (rs.next()) {
+	            count = rs.getInt(1);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return count;
+	}
+	
+	
+	public  List<TaskEntity> DisplayAllTaskLimit(int start, int count) {
+	    List<TaskEntity> listTaskEntities = new ArrayList<>();
+
+	    String sql = "SELECT\n" + "	t.id ,\n" + "	t.id_user ,\n" + "	t.id_project ,\n" + "	t.id_status ,\n"
+				+ "	t.name ,\n" + "	t.start_date ,\n" + "	t.end_date,\n" + "	u.last_name as lastNameU,\n"
+				+ "	s.name as stsName,\n" + "	p.name as proName\n" + "from\n" + "	task t\n" + "join users u on\n"
+				+ "	t.id_user = u.id\n" + "JOIN status s on\n" + "	t.id_status = s.id\n" + "JOIN project p on\n"
+				+ "	t.id_project = p.id LIMIT ?, ?";
+
+	    try (Connection connection = MysqlConfig.getConnection();
+	         PreparedStatement ptmt = connection.prepareStatement(sql)) {
+	         
+	        ptmt.setInt(1, start);
+	        ptmt.setInt(2, count);
+
+	        try (ResultSet resultSet = ptmt.executeQuery()) {
+	            while (resultSet.next()) {
+	            	TaskEntity taskEntity = new TaskEntity(resultSet.getInt("id"), resultSet.getString("lastNameU"),
+							resultSet.getString("proName"), resultSet.getString("stsName"), resultSet.getString("name"),
+							resultSet.getTimestamp("start_date"), resultSet.getTimestamp("end_date"));
+					listTaskEntities.add(taskEntity);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // Ensure that SQL exceptions are properly printed out
+	    }
+
+	    return listTaskEntities;
+	}
+	
+	
+	
 	public TaskEntityLists getTasksByStatus(List<TaskEntity> taskList) {
         List<TaskEntity> chuaThucHienTasks = new ArrayList<>();
         List<TaskEntity> dangThucHienTasks = new ArrayList<>();

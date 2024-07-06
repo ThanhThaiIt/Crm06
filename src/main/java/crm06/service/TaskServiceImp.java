@@ -62,6 +62,18 @@ public class TaskServiceImp implements TaskService {
 		taskRepository.editTaskById(taskEntity);
 		
 	}
+
+	@Override
+	public List<TaskEntity> DisplayAllTaskLimit(int start, int count) {
+		// TODO Auto-generated method stub
+		return taskRepository.DisplayAllTaskLimit(start, count);
+	}
+
+	@Override
+	public int countRows() {
+		// TODO Auto-generated method stub
+		return taskRepository.countRows();
+	}
 	
 
 }

@@ -76,4 +76,16 @@ public class UserServiceimpp implements UserService {
 		return taskRepository.getTasksByStatus(taskList);
 	}
 
+	@Override
+	public List<UserEntity> DisplayAllUserLimit(int start, int count) {
+		// TODO Auto-generated method stub
+		return userRepository.DisplayAllUserLimit(start, count);
+	}
+
+	@Override
+	public int countRows() {
+		
+		return userRepository.countRows();
+	}
+
 }

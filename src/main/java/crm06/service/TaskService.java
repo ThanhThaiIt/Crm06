@@ -16,4 +16,6 @@ public List<TaskEntity> getAllTask() ;
 public boolean deleteTask(int id) ;
 public TaskEntity getTaskByID(int id) ;
 public void editTask(TaskEntity taskEntity) ;
+public  List<TaskEntity> DisplayAllTaskLimit(int start, int count);
+public  int countRows();
 }

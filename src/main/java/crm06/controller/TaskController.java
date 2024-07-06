@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import crm06.entity.ProjectEntity;
 import crm06.entity.TaskEntity;
+import crm06.entity.UserEntity;
 import crm06.service.ProjectService;
 import crm06.service.ProjectServiceImp;
 import crm06.service.TaskService;
@@ -38,7 +40,10 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		break;
 
 	case "/task":
-		getTaskListAndMovingToTaskJSp(req, resp);
+		//getTaskListAndMovingToTaskJSp(req, resp);
+		String idUPagi = req.getParameter("pageeid");
+        //System.out.println("pageeid: " + idUPagi);  // Add this line for debugging
+        taskPagination(req, resp, idUPagi);
 		break;
 	case "/edit_task":
 		int id = Integer.parseInt(req.getParameter("id"));
@@ -50,6 +55,52 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		throw new IllegalArgumentException("Unexpected Value: ");
 
 	}
+}
+
+
+
+private void taskPagination(HttpServletRequest request, HttpServletResponse response, String idUPagi) throws ServletException, IOException {
+	String pageidstr = idUPagi;
+	//if (idCat.equals("0") ) {
+
+		
+		if (pageidstr != null) {
+			int pageid = Integer.parseInt(pageidstr);
+			int count = 4;
+
+			if (pageid == 1) {
+				pageid=0;
+			} else {
+				pageid = pageid - 1;
+				pageid = pageid * count ;
+			}
+
+			List<TaskEntity> allTask = taskService.DisplayAllTaskLimit(pageid, count);
+			
+			
+
+			int sumrow = taskService.countRows();
+//			int maxpageid = 0;
+//
+//			if ((sumrow / count) % 2 == 0) {
+//				maxpageid = (sumrow / count);
+//			} else if ((sumrow / count) % 2 != 0){
+//				maxpageid = (sumrow / count) + 1;
+//			}
+			int maxpageid = (int) Math.ceil((double) sumrow / count);
+
+			request.setAttribute("maxpageid", maxpageid);
+
+			request.setAttribute("TasksLista", allTask);
+
+			request.setAttribute("numberpage", Integer.parseInt(pageidstr));
+			request.setAttribute("stt", 0);
+			RequestDispatcher rd = request.getRequestDispatcher("task.jsp");
+			rd.forward(request, response);
+			
+			
+		}
+	
 }
 
 

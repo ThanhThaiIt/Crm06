@@ -1,14 +1,20 @@
 package crm06.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import crm06.entity.RoleEntity;
 import crm06.entity.StatisticalTaskEntity;
@@ -20,7 +26,7 @@ import crm06.service.TaskServiceImp;
 import crm06.service.UserService;
 import crm06.service.UserServiceimpp;
 
-@WebServlet(name = "userController", urlPatterns = { "/add_user", "/user", "/edit_user","/detail_user" })
+@WebServlet(name = "userController", urlPatterns = { "/add_user", "/user", "/edit_user","/detail_user","/pagin_user" })
 public class AddUserController extends HttpServlet {
 	private UserService userService = new UserServiceimpp();
 	private TaskService taskService = new TaskServiceImp();
@@ -35,8 +41,12 @@ public class AddUserController extends HttpServlet {
 			break;
 
 		case "/user":
-			getUserListAndMovingToUserJSp(req, resp);
-			break;
+			
+			//getUserListAndMovingToUserJSp(req, resp);
+			String idUPagi = req.getParameter("pageeid");
+            //System.out.println("pageeid: " + idUPagi);  // Add this line for debugging
+            userPagination(req, resp, idUPagi);
+            break;
 		case "/edit_user":
 			int id = Integer.parseInt(req.getParameter("id"));
 			getUserByIdEdit(req, resp, id);
@@ -47,6 +57,7 @@ public class AddUserController extends HttpServlet {
 			getUserByIdDetail(req, resp, idU);
 
 			break;
+		
 
 		default:
 			throw new IllegalArgumentException("Unexpected Value: ");
@@ -56,6 +67,52 @@ public class AddUserController extends HttpServlet {
 	}
 
 	
+
+	private void userPagination(HttpServletRequest request, HttpServletResponse response, String idUPagi) throws ServletException, IOException {
+		//String idCat = request.getParameter("idcate");
+		String pageidstr = idUPagi;
+		//if (idCat.equals("0") ) {
+
+			
+			if (pageidstr != null) {
+				int pageid = Integer.parseInt(pageidstr);
+				int count = 4;
+
+				if (pageid == 1) {
+					pageid=0;
+				} else {
+					pageid = pageid - 1;
+					pageid = pageid * count ;
+				}
+
+				List<UserEntity> allUser = userService.DisplayAllUserLimit(pageid, count);
+				
+				
+
+				int sumrow = userService.countRows();
+				int maxpageid = 0;
+
+				if ((sumrow / count) % 2 == 0) {
+					maxpageid = (sumrow / count);
+				} else {
+					maxpageid = (sumrow / count) + 1;
+				}
+
+				request.setAttribute("maxpageid", maxpageid);
+
+				request.setAttribute("usersLista", allUser);
+
+				request.setAttribute("numberpage", Integer.parseInt(pageidstr));
+				request.setAttribute("stt", 0);
+				RequestDispatcher rd = request.getRequestDispatcher("user-table.jsp");
+				rd.forward(request, response);
+				
+				
+			}
+		
+	}
+
+
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -20,4 +20,6 @@ public interface UserService {
 	public List<TaskEntity> getListTaskByidUser(int id) ;
 	public StatisticalTaskEntity getStatisticalTaskEntity(List<TaskEntity> listTask) ;
 	public TaskEntityLists getTasksByStatus(List<TaskEntity> taskList) ;
+	public  List<UserEntity> DisplayAllUserLimit ( int start, int count);
+	public  int countRows();
 }
